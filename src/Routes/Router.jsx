@@ -4,6 +4,7 @@ import ErrorPage from "../Pages/ErrorPage";
 import Login from "../Authentication/Login/Login";
 import Register from "../Authentication/Register/Register";
 import Home from "../Pages/Home/Home";
+import ProductDetails from "../Shared/ProductCard/ProductDetails";
 
 const router = createBrowserRouter([
   {
@@ -14,6 +15,12 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <Home />,
+      },
+      {
+        path: "/productDetails/:id",
+        element: <ProductDetails />,
+        loader: ({ params }) =>
+          fetch(`${import.meta.env.VITE_AXIOS_API}/product/${params.id}`),
       },
       {
         path: "/login",
