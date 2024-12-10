@@ -1,5 +1,6 @@
 import { Link, NavLink } from "react-router-dom";
 import useAuth from "../../Hooks/useAuth";
+import Counter from "../../Components/Cart/Counter";
 
 const Navbar = () => {
   const { user, logOut } = useAuth();
@@ -13,7 +14,7 @@ const Navbar = () => {
               ? "text-lg border-b-2 font-bold flex justify-center border-green-700 text-green-700"
               : "font-bold text-lg flex justify-center text-green-700"
           }
-          to="/allCategories"
+          to="/collections/"
         >
           All Categories
         </NavLink>
@@ -25,7 +26,7 @@ const Navbar = () => {
               ? "text-lg border-b-2 font-bold flex justify-center border-green-700 text-green-700"
               : "font-bold text-lg flex justify-center text-green-700"
           }
-          to="/ghee"
+          to="/collections/ghee"
         >
           Ghee {"( ঘি )"}
         </NavLink>
@@ -37,7 +38,7 @@ const Navbar = () => {
               ? "text-lg border-b-2 font-bold flex justify-center border-green-700 text-green-700"
               : "font-bold text-lg flex justify-center text-green-700"
           }
-          to="/honey"
+          to="/collections/honey"
         >
           Honey {"( মধু )"}
         </NavLink>
@@ -50,7 +51,7 @@ const Navbar = () => {
               ? "text-lg border-b-2 font-bold flex justify-center border-green-700 text-green-700"
               : "font-bold text-lg flex justify-center text-green-700"
           }
-          to="/oil"
+          to="/collections/oil"
         >
           Oil {"( তেল )"}
         </NavLink>
@@ -63,7 +64,7 @@ const Navbar = () => {
               ? "text-lg border-b-2 font-bold flex justify-center border-green-700 text-green-700"
               : "font-bold text-lg flex justify-center text-green-700"
           }
-          to="/jaggery"
+          to="/collections/jaggery"
         >
           Jaggery {"( গুড় )"}
         </NavLink>
@@ -76,7 +77,7 @@ const Navbar = () => {
               ? "text-lg border-b-2 font-bold flex justify-center border-green-700 text-green-700"
               : "font-bold text-lg flex justify-center text-green-700"
           }
-          to="/nuts&seeds"
+          to="/collections/seeds"
         >
           Nuts & Seeds
         </NavLink>
@@ -89,7 +90,7 @@ const Navbar = () => {
               ? "text-lg border-b-2 font-bold flex justify-center border-green-700 text-green-700"
               : "font-bold text-lg flex justify-center text-green-700"
           }
-          to="/masala"
+          to="/collections/masala"
         >
           Masala
         </NavLink>
@@ -98,7 +99,7 @@ const Navbar = () => {
   );
 
   return (
-    <div className=" bg-gradient-to-tr from-[#ceebd4] via-transparent border-b-2 border-green-500 to-white relative z-10">
+    <div className=" bg-gradient-to-tr from-[#ceebd4] via-transparent border-2 border-green-500 to-white ">
       <div className=" max-w-[2400px] mx-auto">
         <div className="navbar lg:w-[86%] p-0  w-[95%] mx-auto">
           <div className="navbar-start lg:w-[50%] w-full">
@@ -130,7 +131,7 @@ const Navbar = () => {
                 {navLinks}
               </ul>
             </div>
-            <Link className="md:text-2xl text-xl font-extrabold ">
+            <Link className="md:text-2xl text-xl font-extrabold lg:hidden">
               Shaadbazar <span className="text-green-500 ">BD</span>{" "}
             </Link>
           </div>
@@ -138,52 +139,59 @@ const Navbar = () => {
             <ul className="menu menu-horizontal px-1">{navLinks}</ul>
           </div>
 
-          {user ? (
-            <div className="navbar-end">
-              <div className="dropdown dropdown-end">
-                <div
-                  tabIndex={0}
-                  role="button"
-                  className="btn btn-ghost btn-circle avatar"
-                >
-                  <div className="w-10 rounded-full">
-                    <img alt="user image" src={user?.photoURL} />
+          <div className="lg:hidden flex gap-4">
+            {/* Cart */}
+            <Link to="/cart">
+              <Counter />
+            </Link>
+
+            {user ? (
+              <div className="navbar-end">
+                <div className="dropdown dropdown-end">
+                  <div
+                    tabIndex={0}
+                    role="button"
+                    className="btn btn-ghost btn-circle avatar"
+                  >
+                    <div className="w-10 rounded-full">
+                      <img alt="user image" src={user?.photoURL} />
+                    </div>
                   </div>
+                  <ul
+                    tabIndex={0}
+                    className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52 space-y-3 font-semibold"
+                  >
+                    <li>
+                      <Link to="/addedFoods">My added food items</Link>
+                    </li>
+                    <li>
+                      <Link to="/addFood">Add a food item</Link>
+                    </li>
+                    <li>
+                      <Link to="/orderedFoods">My ordered food items</Link>
+                    </li>
+                    <li>
+                      <Link
+                        onClick={() => logOut()}
+                        className="text-center block bg-green-400 hover:text-green-700 text-white"
+                      >
+                        Logout
+                      </Link>
+                    </li>
+                  </ul>
                 </div>
-                <ul
-                  tabIndex={0}
-                  className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52 space-y-3 font-semibold"
-                >
-                  <li>
-                    <Link to="/addedFoods">My added food items</Link>
-                  </li>
-                  <li>
-                    <Link to="/addFood">Add a food item</Link>
-                  </li>
-                  <li>
-                    <Link to="/orderedFoods">My ordered food items</Link>
-                  </li>
-                  <li>
-                    <Link
-                      onClick={() => logOut()}
-                      className="text-center block bg-green-400 hover:text-green-700 text-white"
-                    >
-                      Logout
-                    </Link>
-                  </li>
-                </ul>
               </div>
-            </div>
-          ) : (
-            <div className="navbar-end lg:w-[50%] w-[30%]">
-              <Link
-                to="/login"
-                className="font-bold text-xl border-x-2 border-green-600 rounded-lg px-3 border-y-0 text-green-700  hover:text-black"
-              >
-                Login
-              </Link>
-            </div>
-          )}
+            ) : (
+              <div className="navbar-end lg:w-[50%] w-[30%]">
+                <Link
+                  to="/login"
+                  className="font-bold text-xl border-x-2 border-green-600 rounded-lg px-3 border-y-0 text-green-700  hover:text-black"
+                >
+                  Login
+                </Link>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </div>
