@@ -7,12 +7,17 @@ import AuthProvider from "./Authentication/Provider/AuthProvider";
 import { Toaster } from "react-hot-toast";
 import { store } from "./Redux/Store/store";
 import { Provider } from "react-redux";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+const queryClient = new QueryClient();
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <Provider store={store}>
       <AuthProvider>
-        <RouterProvider router={router} />
+        <QueryClientProvider client={queryClient}>
+          <RouterProvider router={router} />
+        </QueryClientProvider>
       </AuthProvider>
       <Toaster />
     </Provider>

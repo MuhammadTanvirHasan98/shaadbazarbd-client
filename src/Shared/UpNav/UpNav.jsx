@@ -5,9 +5,11 @@ import { GrCart } from "react-icons/gr";
 import { IoSearchOutline } from "react-icons/io5";
 import Counter from "../../Components/Cart/Counter";
 import WishCounter from "../../Components/Wishlist/WishCounter";
+import useAdmin from "../../Hooks/useAdmin";
 
 function UpNav() {
   const { user, logOut } = useAuth();
+  const [isAdmin, isLoading] = useAdmin();
 
   const [search, setSearch] = useState("");
   const navigate = useNavigate();
@@ -56,7 +58,7 @@ function UpNav() {
         </div>
         <div className="hidden lg:block">
           {" "}
-          <Link className="md:text-2xl text-xl font-extrabold ">
+          <Link className="md:text-3xl text-xl font-extrabold ">
             Shaadbazar <span className="text-green-500 ">BD</span>{" "}
           </Link>
         </div>
@@ -87,9 +89,15 @@ function UpNav() {
                   tabIndex={0}
                   className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52 space-y-3 font-semibold"
                 >
-                  <li>
-                    <Link to="/orderedFoods">My ordered list</Link>
-                  </li>
+                  {isAdmin ? (
+                    <li>
+                      <Link to="/dashboard">Admin Dashboard</Link>
+                    </li>
+                  ) : (
+                    <li>
+                      <Link to="/orderedProducts">My ordered list</Link>
+                    </li>
+                  )}
                   <li>
                     <Link
                       onClick={() => logOut()}

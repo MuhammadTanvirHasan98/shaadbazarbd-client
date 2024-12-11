@@ -10,6 +10,9 @@ import Cart from "../Components/Cart/Cart";
 import Wishlist from "../Components/Wishlist/Wishlist";
 import PrivateRoute from "./PrivateRoute";
 import SearchResult from "../Pages/SearchResult/SearchResult";
+import DashboardLayout from "../Layouts/DashboardLayout";
+import AddProduct from "../Pages/Dashboard/AddProduct";
+import DasAllProducts from "../Pages/Dashboard/DasAllProducts";
 
 const router = createBrowserRouter([
   {
@@ -72,6 +75,35 @@ const router = createBrowserRouter([
       {
         path: "/register",
         element: <Register />,
+      },
+    ],
+  },
+  {
+    path: "/dashboard",
+    element: (
+      // <PrivateRoute>
+      <DashboardLayout />
+      // </PrivateRoute>
+    ),
+    errorElement: <ErrorPage />,
+    children: [
+      // User Routes
+      {
+        index: true,
+        element: <h1>Dashboard!</h1>,
+        // element: (
+        //   // <PrivateRoute>
+        //     <UserProfile />
+        //   // </PrivateRoute>
+        // ),
+      },
+      {
+        path: "addProduct",
+        element: <AddProduct />,
+      },
+      {
+        path: "allProducts",
+        element: <DasAllProducts />,
       },
     ],
   },

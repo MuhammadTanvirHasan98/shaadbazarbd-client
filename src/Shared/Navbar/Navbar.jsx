@@ -1,17 +1,25 @@
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useLocation } from "react-router-dom";
 import useAuth from "../../Hooks/useAuth";
 import Counter from "../../Components/Cart/Counter";
 import WishCounter from "../../Components/Wishlist/WishCounter";
+import useAdmin from "../../Hooks/useAdmin";
 
 const Navbar = () => {
   const { user, logOut } = useAuth();
+  const [isAdmin, isLoading] = useAdmin();
+  const location = useLocation();
+  console.log(location.pathname);
+
+  console.log("Check user role:", isAdmin);
+
+  console.log(isLoading);
 
   const navLinks = (
     <div className="flex flex-col  lg:flex-row gap-4 ">
       <li>
         <NavLink
-          className={({ isActive }) =>
-            isActive
+          className={() =>
+            location.pathname === "/collections/"
               ? "text-lg border-b-2 font-bold flex justify-center border-green-700 text-green-700"
               : "font-bold text-lg flex justify-center text-green-700"
           }
@@ -22,8 +30,8 @@ const Navbar = () => {
       </li>
       <li>
         <NavLink
-          className={({ isActive }) =>
-            isActive
+          className={() =>
+            location.pathname === "/collections/ghee"
               ? "text-lg border-b-2 font-bold flex justify-center border-green-700 text-green-700"
               : "font-bold text-lg flex justify-center text-green-700"
           }
@@ -34,8 +42,8 @@ const Navbar = () => {
       </li>
       <li>
         <NavLink
-          className={({ isActive }) =>
-            isActive
+          className={() =>
+            location.pathname === "/collections/honey"
               ? "text-lg border-b-2 font-bold flex justify-center border-green-700 text-green-700"
               : "font-bold text-lg flex justify-center text-green-700"
           }
@@ -167,9 +175,16 @@ const Navbar = () => {
                     tabIndex={0}
                     className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52 space-y-3 font-semibold"
                   >
-                    <li>
-                      <Link to="/orderedProducts">My ordered list</Link>
-                    </li>
+                    {isAdmin ? (
+                      <li>
+                        <Link to="/dashboard">Admin Dashboard</Link>
+                      </li>
+                    ) : (
+                      <li>
+                        <Link to="/orderedProducts">My ordered list</Link>
+                      </li>
+                    )}
+
                     <li>
                       <Link
                         onClick={() => logOut()}

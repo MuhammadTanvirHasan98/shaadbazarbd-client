@@ -19,7 +19,7 @@ export default function FiltersSidebar() {
   ];
 
   return (
-    <div className="w-64 p-4 border border-green-500">
+    <div className="w-64 p-4">
       <h2 className="text-3xl font-medium mb-4">Filters</h2>
 
       <div>

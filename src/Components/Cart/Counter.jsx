@@ -10,7 +10,11 @@ function Counter() {
   return (
     <div className="relative">
       <GrCart className="text-green-500 text-3xl" />
-      <p className="absolute bottom-4 text-green-600 font-semibold left-4 bg-green-100 px-2 rounded-full">
+      <p
+        className={`${
+          cartCount === 0 && "hidden"
+        } absolute bottom-4 text-green-600 font-semibold left-4 bg-green-100 px-2 rounded-full`}
+      >
         {cartCount}
       </p>
     </div>
