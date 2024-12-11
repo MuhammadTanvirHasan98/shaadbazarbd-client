@@ -3,7 +3,7 @@ import { GrCart } from "react-icons/gr";
 import { useSelector } from "react-redux";
 
 function Counter() {
-  const cartCount = useSelector((state) => state.cart).length;
+  const cartCount = useSelector((state) => state.cart.cart).length;
 
   console.log(cartCount);
 

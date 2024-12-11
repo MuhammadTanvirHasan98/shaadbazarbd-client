@@ -7,6 +7,8 @@ import Home from "../Pages/Home/Home";
 import ProductDetails from "../Shared/ProductCard/ProductDetails";
 import Collections from "../Pages/Collections/Collections";
 import Cart from "../Components/Cart/Cart";
+import Wishlist from "../Components/Wishlist/Wishlist";
+import PrivateRoute from "./PrivateRoute";
 
 const router = createBrowserRouter([
   {
@@ -20,7 +22,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/productDetails/:id",
-        element: <ProductDetails />,
+        element: (
+          <PrivateRoute>
+            <ProductDetails />
+          </PrivateRoute>
+        ),
         loader: ({ params }) =>
           fetch(`${import.meta.env.VITE_AXIOS_API}/product/${params.id}`),
       },
@@ -42,6 +48,10 @@ const router = createBrowserRouter([
       {
         path: "/cart",
         element: <Cart />,
+      },
+      {
+        path: "/wishList",
+        element: <Wishlist />,
       },
       {
         path: "/login",

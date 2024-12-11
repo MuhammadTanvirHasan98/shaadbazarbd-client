@@ -1,6 +1,7 @@
 import { Link, NavLink } from "react-router-dom";
 import useAuth from "../../Hooks/useAuth";
 import Counter from "../../Components/Cart/Counter";
+import WishCounter from "../../Components/Wishlist/WishCounter";
 
 const Navbar = () => {
   const { user, logOut } = useAuth();
@@ -140,6 +141,11 @@ const Navbar = () => {
           </div>
 
           <div className="lg:hidden flex gap-4">
+            {/* Wishlist */}
+            <Link to="/wishList" className="mr-2">
+              <WishCounter />
+            </Link>
+
             {/* Cart */}
             <Link to="/cart">
               <Counter />
@@ -162,13 +168,7 @@ const Navbar = () => {
                     className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52 space-y-3 font-semibold"
                   >
                     <li>
-                      <Link to="/addedFoods">My added food items</Link>
-                    </li>
-                    <li>
-                      <Link to="/addFood">Add a food item</Link>
-                    </li>
-                    <li>
-                      <Link to="/orderedFoods">My ordered food items</Link>
+                      <Link to="/orderedProducts">My ordered list</Link>
                     </li>
                     <li>
                       <Link

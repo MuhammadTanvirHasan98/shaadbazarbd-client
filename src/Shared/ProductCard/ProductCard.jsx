@@ -1,7 +1,10 @@
 import PropTypes from "prop-types";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { addProduct } from "../../Redux/Cart/cartSlice";
+import { addProduct } from "../../Redux/Features/Cart/cartSlice";
+import { addToWish } from "../../Redux/Features/Wishlist/wishSlice";
+import toast from "react-hot-toast";
+import useAuth from "../../Hooks/useAuth";
 
 const ProductCard = ({ card }) => {
   const {
@@ -13,6 +16,8 @@ const ProductCard = ({ card }) => {
     price,
     quantity,
   } = card;
+
+  const { user } = useAuth();
 
   const dispatch = useDispatch();
 
@@ -32,32 +37,58 @@ const ProductCard = ({ card }) => {
 
         <div className="font-semibold p-4">
           {/* Cards Info */}
-          <div className="text-lg">
+          <div className="text-lg flex flex-col items-center justify-center">
             <h2 className="text-2xl font-semibold merienda text-center mb-2">
               {food_name}
             </h2>
             <p className="text-center">{category}</p>
-          </div>
-
-          <div className="flex justify-between  mt-4">
             <div>
               <p className="text-lg font-semibold text-green-700 ">
                 TK {price}
               </p>
               <p className="text-gray-400 text-xs">{purchase_count} sales</p>
             </div>
+          </div>
 
-            {/* Buttons */}
-            <div className="flex justify-center mt-2">
+          {/* Action buttons */}
+          <div className="flex justify-between  mt-4">
+            {/* Add to Cart Button */}
+
+            {user ? (
               <button
-                onClick={() =>
-                  dispatch(addProduct({ _id, food_name, food_img, price }))
-                }
+                onClick={() => {
+                  dispatch(addToWish({ _id, food_name, food_img, price }));
+                  toast.success(`${food_name} is added to the wishlist!`);
+                }}
+                className="btn btn-outline btn-sm transition duration-500 hover:bg-green-600 font-extrabold text-[#27a373] merienda rounded-none"
+              >
+                Add Wish
+              </button>
+            ) : (
+              <Link to="/login">
+                <button className="btn btn-outline btn-sm transition duration-500 hover:bg-green-600 font-extrabold text-[#27a373] merienda rounded-none">
+                  Add Wish
+                </button>
+              </Link>
+            )}
+
+            {user ? (
+              <button
+                onClick={() => {
+                  dispatch(addProduct({ _id, food_name, food_img, price }));
+                  toast.success(`${food_name} is added to the cart!`);
+                }}
                 className="btn btn-outline btn-sm transition duration-500 hover:bg-green-600 font-extrabold text-[#27a373] merienda rounded-none"
               >
                 Quick Add
               </button>
-            </div>
+            ) : (
+              <Link to="/login">
+                <button className="btn btn-outline btn-sm transition duration-500 hover:bg-green-600 font-extrabold text-[#27a373] merienda rounded-none">
+                  Quick Add
+                </button>
+              </Link>
+            )}
           </div>
         </div>
       </div>

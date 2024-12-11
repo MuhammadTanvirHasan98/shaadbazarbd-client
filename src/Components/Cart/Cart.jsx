@@ -5,12 +5,12 @@ import {
   increaseQuantity,
   removeAllProduct,
   removeProduct,
-} from "../../Redux/Cart/cartSlice";
+} from "../../Redux/Features/Cart/cartSlice";
 import PlaceOrderModal from "./CartModal";
 import toast from "react-hot-toast";
 
 export default function Cart() {
-  const cartItems = useSelector((state) => state.cart);
+  const cartItems = useSelector((state) => state.cart.cart);
 
   const dispatch = useDispatch();
 
@@ -66,7 +66,7 @@ export default function Cart() {
     return total + item.price * item.quantity;
   }, 0);
 
-  console.log(cartItems);
+  console.log("Cart Items:", cartItems);
 
   return (
     <div className="">

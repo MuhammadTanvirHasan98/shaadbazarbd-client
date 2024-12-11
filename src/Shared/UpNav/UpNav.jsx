@@ -4,11 +4,12 @@ import useAuth from "../../Hooks/useAuth";
 import { GrCart } from "react-icons/gr";
 import { IoSearchOutline } from "react-icons/io5";
 import Counter from "../../Components/Cart/Counter";
+import WishCounter from "../../Components/Wishlist/WishCounter";
 
 function UpNav() {
   // fetch(`${import.meta.env.VITE_AXIOS_API}/allProducts/?search=${"ghee"}`);
 
-  const { user } = useAuth();
+  const { user, logOut } = useAuth();
 
   const [search, setSearch] = useState("");
 
@@ -62,6 +63,11 @@ function UpNav() {
           </Link>
         </div>
         <div className="hidden  z-10 lg:flex gap-6 items-center">
+          {/* Wishlist */}
+          <Link to="/wishList" className="mr-2">
+            <WishCounter />
+          </Link>
+
           {/* Cart */}
           <Link to="/cart">
             <Counter />
@@ -84,13 +90,7 @@ function UpNav() {
                   className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52 space-y-3 font-semibold"
                 >
                   <li>
-                    <Link to="/addedFoods">My added food items</Link>
-                  </li>
-                  <li>
-                    <Link to="/addFood">Add a food item</Link>
-                  </li>
-                  <li>
-                    <Link to="/orderedFoods">My ordered food items</Link>
+                    <Link to="/orderedFoods">My ordered list</Link>
                   </li>
                   <li>
                     <Link
