@@ -119,7 +119,7 @@ export default function Cart() {
                       </div>
                     </td>
                     <td className="py-4">Tk {item?.price}</td>
-                    <td className="py-4 ">
+                    <td className="py-4">
                       <div className="flex items-center border rounded max-w-[120px]">
                         <button
                           onClick={() => dispatch(decreaseQuantity(item?._id))}
@@ -135,7 +135,7 @@ export default function Cart() {
                         />
                         <button
                           onClick={() => dispatch(increaseQuantity(item?._id))}
-                          className="px-3 py-1 hover:bg-gray-100"
+                          className="px-3 py-1.5 hover:bg-gray-100"
                         >
                           +
                         </button>

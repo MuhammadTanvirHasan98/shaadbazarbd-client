@@ -9,6 +9,7 @@ import Collections from "../Pages/Collections/Collections";
 import Cart from "../Components/Cart/Cart";
 import Wishlist from "../Components/Wishlist/Wishlist";
 import PrivateRoute from "./PrivateRoute";
+import SearchResult from "../Pages/SearchResult/SearchResult";
 
 const router = createBrowserRouter([
   {
@@ -34,6 +35,17 @@ const router = createBrowserRouter([
         path: "/collections",
         element: <Collections />,
         loader: () => fetch(`${import.meta.env.VITE_AXIOS_API}/allProducts`),
+      },
+      {
+        path: "/searchProduct/:search",
+        element: <SearchResult />,
+        loader: ({ params }) =>
+          fetch(
+            `${import.meta.env.VITE_AXIOS_API}/allProducts/?search=${
+              params.search
+            }`
+          ),
+        // loader: ({ params }) => console.log(params),
       },
       {
         path: "/collections/:category",

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import useAuth from "../../Hooks/useAuth";
 import { GrCart } from "react-icons/gr";
 import { IoSearchOutline } from "react-icons/io5";
@@ -7,23 +7,19 @@ import Counter from "../../Components/Cart/Counter";
 import WishCounter from "../../Components/Wishlist/WishCounter";
 
 function UpNav() {
-  // fetch(`${import.meta.env.VITE_AXIOS_API}/allProducts/?search=${"ghee"}`);
-
   const { user, logOut } = useAuth();
 
   const [search, setSearch] = useState("");
-
-  // const [allMeals, isLoading] = useMeals(
-  //   search,
-  //   selectedCategory,
-  //   selectedPrice
-  // );
-  // console.log(allMeals);
+  const navigate = useNavigate();
 
   const handleSearch = (e) => {
     e.preventDefault();
     const searchValue = e.target.search.value;
+    // if (searchValue.trim()) {
+    //   navigate(`?search=${encodeURIComponent(searchValue)}`);
+    // }
     setSearch(searchValue);
+    return navigate(`/searchProduct/${searchValue}`);
   };
 
   console.log(search);
@@ -47,12 +43,14 @@ function UpNav() {
                 name="search"
                 className="block w-full rounded-r-none rtl:rounded-r-lg rtl:rounded-l-none  rounded-lg border bg-white px-5 lg:py-2 py-1 focus:outline-none focus:ring focus:border-green-500 focus:ring-[#60f674] focus:ring-opacity-40"
               />
+              {/* <Link to={`/searchProduct/${search}`}> */}
               <button
                 type="submit"
                 className="lg:py-2.5 py-1.5 px-3 text-white text-2xl bg-green-400  border border-r-0 rtl:rounded-r-lg  rtl:rounded-l-none rtl:border-l-0 rtl:border-r rounded-r-lg font-bold"
               >
                 <IoSearchOutline />
               </button>
+              {/* </Link> */}
             </div>
           </form>
         </div>

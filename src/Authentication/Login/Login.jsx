@@ -53,7 +53,7 @@ const Login = () => {
 
   return (
     <div className="flex justify-center items-center">
-      <div className="flex w-full max-w-sm mx-auto overflow-hidden bg-white rounded-lg shadow-lg  lg:max-w-4xl my-32 border-2 border-blue-200">
+      <div className="flex w-full max-w-sm mx-auto overflow-hidden bg-white rounded-lg shadow-lg  lg:max-w-4xl my-32 border-2 border-green-200">
         <div
           className="hidden bg-cover bg-center lg:block lg:w-1/2"
           style={{
