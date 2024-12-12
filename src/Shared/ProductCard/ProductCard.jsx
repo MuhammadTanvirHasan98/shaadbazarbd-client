@@ -7,15 +7,7 @@ import toast from "react-hot-toast";
 import useAuth from "../../Hooks/useAuth";
 
 const ProductCard = ({ card }) => {
-  const {
-    _id,
-    food_name,
-    food_img,
-    category,
-    purchase_count,
-    price,
-    quantity,
-  } = card;
+  const { _id, product_name, product_img, price } = card;
 
   const { user } = useAuth();
 
@@ -28,7 +20,7 @@ const ProductCard = ({ card }) => {
         <Link to={`/productDetails/${_id}`}>
           <figure className="">
             <img
-              src={food_img}
+              src={product_img}
               alt="food_image"
               className="rounded-lg w-full xl:h-[300px] md:h-[220px] h-[280px]"
             />
@@ -39,14 +31,12 @@ const ProductCard = ({ card }) => {
           {/* Cards Info */}
           <div className="text-lg flex flex-col items-center justify-center">
             <h2 className="text-2xl font-semibold merienda text-center mb-2">
-              {food_name}
+              {product_name}
             </h2>
-            <p className="text-center">{category}</p>
             <div>
               <p className="text-lg font-semibold text-green-700 ">
                 TK {price}
               </p>
-              <p className="text-gray-400 text-xs">{purchase_count} sales</p>
             </div>
           </div>
 
@@ -57,8 +47,10 @@ const ProductCard = ({ card }) => {
             {user ? (
               <button
                 onClick={() => {
-                  dispatch(addToWish({ _id, food_name, food_img, price }));
-                  toast.success(`${food_name} is added to the wishlist!`);
+                  dispatch(
+                    addToWish({ _id, product_name, product_img, price })
+                  );
+                  toast.success(`${product_name} is added to the wishlist!`);
                 }}
                 className="btn btn-outline btn-sm transition duration-500 hover:bg-green-600 font-extrabold text-[#27a373] merienda rounded-none"
               >
@@ -75,8 +67,15 @@ const ProductCard = ({ card }) => {
             {user ? (
               <button
                 onClick={() => {
-                  dispatch(addProduct({ _id, food_name, food_img, price }));
-                  toast.success(`${food_name} is added to the cart!`);
+                  dispatch(
+                    addProduct({
+                      _id,
+                      product_name,
+                      product_img,
+                      price,
+                    })
+                  );
+                  toast.success(`${product_name} is added to the cart!`);
                 }}
                 className="btn btn-outline btn-sm transition duration-500 hover:bg-green-600 font-extrabold text-[#27a373] merienda rounded-none"
               >

@@ -13,6 +13,11 @@ import SearchResult from "../Pages/SearchResult/SearchResult";
 import DashboardLayout from "../Layouts/DashboardLayout";
 import AddProduct from "../Pages/Dashboard/AddProduct";
 import DasAllProducts from "../Pages/Dashboard/DasAllProducts";
+import UpdateProduct from "../Pages/Dashboard/UpdateProduct";
+import AllOrders from "../Pages/Dashboard/AllOrders";
+import Dashboard from "../Pages/Dashboard/Dashboard";
+import ManageUsers from "../Pages/Dashboard/ManageUsers";
+import OrderedProducts from "../Pages/User/OrderedProducts";
 
 const router = createBrowserRouter([
   {
@@ -69,6 +74,10 @@ const router = createBrowserRouter([
         element: <Wishlist />,
       },
       {
+        path: "/orderedProducts",
+        element: <OrderedProducts />,
+      },
+      {
         path: "/login",
         element: <Login />,
       },
@@ -80,30 +89,34 @@ const router = createBrowserRouter([
   },
   {
     path: "/dashboard",
-    element: (
-      // <PrivateRoute>
-      <DashboardLayout />
-      // </PrivateRoute>
-    ),
+    element: <DashboardLayout />,
     errorElement: <ErrorPage />,
     children: [
-      // User Routes
       {
         index: true,
-        element: <h1>Dashboard!</h1>,
-        // element: (
-        //   // <PrivateRoute>
-        //     <UserProfile />
-        //   // </PrivateRoute>
-        // ),
+        element: <Dashboard />,
       },
       {
         path: "addProduct",
         element: <AddProduct />,
       },
       {
+        path: "updateProduct/:id",
+        element: <UpdateProduct />,
+        loader: ({ params }) =>
+          fetch(`${import.meta.env.VITE_AXIOS_API}/product/${params.id}`),
+      },
+      {
+        path: "manageUsers",
+        element: <ManageUsers />,
+      },
+      {
         path: "allProducts",
         element: <DasAllProducts />,
+      },
+      {
+        path: "allOrders",
+        element: <AllOrders />,
       },
     ],
   },

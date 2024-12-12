@@ -5,7 +5,7 @@ import { LuView } from "react-icons/lu";
 import { CiSquareRemove } from "react-icons/ci";
 import { removeFromWish } from "../../Redux/Features/Wishlist/wishSlice";
 
-export default function Wishlist() {
+export default function OrderedProducts() {
   const wishItems = useSelector((state) => state.wish.wish);
 
   const dispatch = useDispatch();
@@ -13,20 +13,20 @@ export default function Wishlist() {
   return (
     <div className="">
       <div className="bg-green-400 text-white space-y-4 py-6">
-        <p className=" text-center text-4xl">Wishlist</p>
+        <p className=" text-center text-4xl">Ordered Products</p>
         <p className="text-center text-xl">
           <Link to="/" className="hover:text-gray-500">
             Home
           </Link>
           {"  > "}
-          Your Wishlist
+          Your Ordered Products
         </p>
       </div>
 
       <div className="max-w-6xl mx-auto p-4">
         {wishItems.length === 0 ? (
           <p className="text-green-500 text-center text-3xl font-semibold mt-10">
-            Your wishlist is <span className="text-red-600"> empty!</span>{" "}
+            Your list is <span className="text-red-600"> empty!</span>{" "}
           </p>
         ) : (
           <div>
@@ -34,8 +34,11 @@ export default function Wishlist() {
               <thead>
                 <tr className="border-b">
                   <th className="text-left py-4 font-normal">Product Image</th>
-                  <th className="text-left py-4 font-normal">Product Name</th>
-                  <th className="text-left py-4 font-normal">Price</th>
+                  <th className="text-left py-4 font-normal w-[30%]">
+                    Product Name
+                  </th>
+                  <th className="text-left py-4 font-normal w-[20%]">Price</th>
+                  <th className="text-left py-4 font-normal w-[20%]">Status</th>
                   <th className="text-right py-4 font-normal">Actions</th>
                 </tr>
               </thead>
@@ -61,6 +64,13 @@ export default function Wishlist() {
                         <h3 className="font-medium">{item?.price}</h3>
                       </div>
                     </td>
+                    <td className="py-4">
+                      <div>
+                        <h3 className="font-medium text-yellow-500">
+                          {"Pending"}
+                        </h3>
+                      </div>
+                    </td>
 
                     <td className="py-4 text-right">
                       <div className="flex justify-end gap-4 items-center">
@@ -73,7 +83,7 @@ export default function Wishlist() {
                           onClick={() => {
                             dispatch(removeFromWish(item._id));
                             toast.success(
-                              "Your item has been removed from wishlist!"
+                              "Your item has been removed from ordered list!"
                             );
                           }}
                         />

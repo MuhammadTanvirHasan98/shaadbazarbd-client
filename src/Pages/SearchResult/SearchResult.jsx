@@ -1,11 +1,12 @@
 import React from "react";
-import { useLoaderData, useParams, useSearchParams } from "react-router-dom";
+import { useLoaderData, useParams } from "react-router-dom";
 import ProductCard from "../../Shared/ProductCard/ProductCard";
 
 export default function SearchResult() {
   const products = useLoaderData();
-  console.log(products);
+  console.log("Search product list:", products);
   const { search } = useParams();
+  console.log(search);
 
   return (
     <div>

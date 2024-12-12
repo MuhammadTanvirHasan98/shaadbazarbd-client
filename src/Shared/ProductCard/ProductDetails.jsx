@@ -1,19 +1,26 @@
 import { Link, useLoaderData } from "react-router-dom";
+import useAuth from "../../Hooks/useAuth";
+import { useDispatch } from "react-redux";
+import { addProduct } from "../../Redux/Features/Cart/cartSlice";
+import { addToWish } from "../../Redux/Features/Wishlist/wishSlice";
+import toast from "react-hot-toast";
 
 const ProductDetails = () => {
   const productInfo = useLoaderData();
   console.log(productInfo);
 
+  const { user } = useAuth();
+  const dispatch = useDispatch();
+
   const {
     _id,
-    food_name,
-    food_img,
+    product_name,
+    product_img,
     price,
-    quantity,
-    purchase_count,
+    stock,
     category,
-    food_origin,
-    made_by,
+    origin,
+
     description,
   } = productInfo;
 
@@ -26,7 +33,7 @@ const ProductDetails = () => {
         {/* craft image  */}
         <div className="lg:w-1/2 w-full p-4 lg:pb-4 lg:pr-0 pb-0">
           <img
-            src={food_img}
+            src={product_img}
             className="w-full lg:h-full md:h-[500px] h-[350px] lg:rounded-l-xl lg:rounded-tr-none rounded-t-xl"
           />
         </div>
@@ -34,7 +41,7 @@ const ProductDetails = () => {
         {/* Craft Info */}
         <div className="xl:text-2xl lg:w-1/2 w-full lg:p-10 md:p-7 p-5 text-[#385398]">
           <h1 className="lg:text-3xl lg:text-left text-center text-2xl mb-2 font-bold merienda">
-            {food_name}
+            {product_name}
           </h1>
 
           <h2 className="xl:text-2xl text-lg lg:text-left text-center">
@@ -46,10 +53,7 @@ const ProductDetails = () => {
           <div className="flex justify-between">
             <p className="flex items-center gap-1 xl:text-2xl text-lg">
               Available Quantity:{" "}
-              <span className="font-semibold">{quantity} </span>
-            </p>
-            <p className="flex items-center text-gray-400 gap-1  xl:text-2xl text-lg">
-              {purchase_count} sales
+              <span className="font-semibold">{stock} </span>
             </p>
           </div>
 
@@ -60,16 +64,9 @@ const ProductDetails = () => {
               $ {price}
             </p>
             <p className="flex items-center  gap-1  xl:text-2xl text-lg">
-              Origin: <span className="font-bold">{food_origin}</span>
+              Origin: <span className="font-bold">{origin}</span>
             </p>
           </div>
-
-          <hr className="border-orange-100 md:my-2 my-1 " />
-
-          <p className="">
-            Made by:{" "}
-            <span className="font-bold merienda">{made_by?.brand}</span>{" "}
-          </p>
 
           <hr className="border-orange-100 md:my-2 my-1 " />
 
@@ -79,13 +76,54 @@ const ProductDetails = () => {
             <span className="text-pretty font-semibold">{description} </span>
           </p>
 
-          {/* Purchase button */}
-          <div className="flex justify-center lg:justify-end mt-4">
-            <Link to={`/purchaseFood/${_id}`}>
-              <button className="btn btn-outline  transition duration-500 hover:bg-orange-400 font-extrabold text-[#385398] merienda">
-                Purchase
+          {/* Action buttons */}
+          <div className="flex justify-between  mt-4">
+            {/* Add to Cart Button */}
+
+            {user ? (
+              <button
+                onClick={() => {
+                  dispatch(
+                    addToWish({ _id, product_name, product_img, price })
+                  );
+                  toast.success(`${product_name} is added to the wishlist!`);
+                }}
+                className="btn btn-outline btn-sm transition duration-500 hover:bg-green-600 font-extrabold text-[#27a373] merienda rounded-none"
+              >
+                Add Wish
               </button>
-            </Link>
+            ) : (
+              <Link to="/login">
+                <button className="btn btn-outline btn-sm transition duration-500 hover:bg-green-600 font-extrabold text-[#27a373] merienda rounded-none">
+                  Add Wish
+                </button>
+              </Link>
+            )}
+
+            {user ? (
+              <button
+                onClick={() => {
+                  dispatch(
+                    addProduct({
+                      _id,
+                      product_name,
+                      product_img,
+                      price,
+                    })
+                  );
+                  toast.success(`${product_name} is added to the cart!`);
+                }}
+                className="btn btn-outline btn-sm transition duration-500 hover:bg-green-600 font-extrabold text-[#27a373] merienda rounded-none"
+              >
+                Quick Add
+              </button>
+            ) : (
+              <Link to="/login">
+                <button className="btn btn-outline btn-sm transition duration-500 hover:bg-green-600 font-extrabold text-[#27a373] merienda rounded-none">
+                  Quick Add
+                </button>
+              </Link>
+            )}
           </div>
         </div>
       </div>

@@ -7,17 +7,12 @@ export default function Home() {
   const { logOut } = useAuth();
   return (
     <div>
-      <div className="mt-12 mb-32">
+      <div className="mt-6 mb-20">
         <Banner />
       </div>
       <div>
         <AllProducts />
       </div>
-      Home Page
-      <button className="btn btn-outline btn-sm" onClick={logOut}>
-        Log out
-      </button>
-      <Link to="/login">Login</Link>
     </div>
   );
 }

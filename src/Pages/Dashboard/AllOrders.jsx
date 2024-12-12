@@ -10,7 +10,7 @@ import toast from "react-hot-toast";
 import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
 
-export default function DasAllProducts() {
+export default function AllOrders() {
   const { user, loading } = useAuth();
   const axiosPublic = useAxiosPublic();
 
@@ -64,10 +64,7 @@ export default function DasAllProducts() {
       {" "}
       <div className="min-h-[calc(100vh-80px)] border-2 border-cyan-300 space-y-7">
         <div className="m-2">
-          <TableHeaderText
-            text={"My All Products"}
-            count={allProducts.length}
-          />
+          <TableHeaderText text={"All Orders"} count={allProducts.length} />
 
           {isLoading || loading ? (
             <LoadingSpinner />
@@ -81,16 +78,17 @@ export default function DasAllProducts() {
                     </th>
                     <th className="text-left py-4 font-normal">Product Name</th>
                     <th className="text-left py-4 font-normal">
-                      Quantity in Stock
+                      Order Quantity
                     </th>
                     <th className="text-left py-4 font-normal">Price</th>
+                    <th className="text-left py-4 font-normal">Status</th>
                     <th className="text-right py-4 font-normal pr-6">
                       Actions
                     </th>
                   </tr>
                 </thead>
                 <tbody>
-                  {allProducts.map((item, indx) => (
+                  {allProducts.splice(0, 6).map((item, indx) => (
                     <tr key={indx} className="border-b">
                       <td className="py-4">
                         <div className="flex items-center gap-4">
@@ -110,12 +108,19 @@ export default function DasAllProducts() {
 
                       <td className="py-4 pl-10">
                         <div>
-                          <h3 className="font-medium">{item?.price}</h3>
+                          <h3 className="font-medium">1</h3>
                         </div>
                       </td>
                       <td className="py-4">
                         <div>
                           <h3 className="font-medium">{item?.price}</h3>
+                        </div>
+                      </td>
+                      <td className="py-4">
+                        <div>
+                          <h3 className="font-medium text-yellow-500">
+                            Pending
+                          </h3>
                         </div>
                       </td>
 

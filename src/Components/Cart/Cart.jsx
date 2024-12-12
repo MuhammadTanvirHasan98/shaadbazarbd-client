@@ -26,36 +26,6 @@ export default function Cart() {
     dispatch(removeAllProduct());
 
     console.log(review);
-
-    // const reviewInfo = {
-    //   mealId: _id,
-    //   reviewer: {
-    //     name: user?.displayName,
-    //     image: user?.photoURL,
-    //     email: user?.email,
-    //   },
-    //   review,
-    //   mealLikes: likes,
-    //   review_count: reviews + 1,
-    //   mealTitle: title,
-    // };
-
-    // console.table({ reviewInfo });
-
-    // try {
-    //   const { data } = await axiosSecure.post("/addReview", reviewInfo);
-    //   console.log(data);
-    //   if (data.acknowledged) {
-    //     document.getElementById("review_modal").close();
-    //     toast.success("Thanks for your Review!");
-    //     refetchReviews();
-    //     refetchMeal();
-    //     form.reset();
-    //   }
-    // } catch (err) {
-    //   console.log(err.message);
-    //   toast.error(err.message);
-    // }
   };
 
   const handleClose = () => {
@@ -103,12 +73,12 @@ export default function Cart() {
                     <td className="py-4">
                       <div className="flex items-center gap-4">
                         <img
-                          src={item?.food_img}
+                          src={item?.product_img}
                           alt="Black Garlic"
                           className="w-20 h-20 object-cover rounded"
                         />
                         <div>
-                          <h3 className="font-medium">{item?.food_name}</h3>
+                          <h3 className="font-medium">{item?.product_name}</h3>
                           <button
                             onClick={() => dispatch(removeProduct(item?._id))}
                             className="text-gray-500 text-sm mt-1 hover:underline"
