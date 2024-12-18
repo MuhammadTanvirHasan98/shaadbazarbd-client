@@ -8,17 +8,19 @@ export const wishSlice = createSlice({
   name: "wish",
   initialState,
   reducers: {
-    addToWish: (state, action) => {
-      state.wish.push(action.payload);
+    setWish: (state, action) => {
+      console.log("Redux", action.payload);
+      state.wish = action.payload;
     },
-    removeFromWish: (state, action) => {
-      state.wish = state.wish.filter((item) => item._id !== action.payload);
+    addWish: (state, action) => {
+      console.log("Redux", action.payload);
+      state.wish.push(action.payload);
     },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { addToWish, removeFromWish } = wishSlice.actions;
+export const { setWish, addWish } = wishSlice.actions;
 
 const wishReducer = wishSlice.reducer;
 

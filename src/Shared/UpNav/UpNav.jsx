@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import useAuth from "../../Hooks/useAuth";
-import { GrCart } from "react-icons/gr";
 import { IoSearchOutline } from "react-icons/io5";
 import Counter from "../../Components/Cart/Counter";
 import WishCounter from "../../Components/Wishlist/WishCounter";
@@ -17,9 +16,6 @@ function UpNav() {
   const handleSearch = (e) => {
     e.preventDefault();
     const searchValue = e.target.search.value;
-    // if (searchValue.trim()) {
-    //   navigate(`?search=${encodeURIComponent(searchValue)}`);
-    // }
     setSearch(searchValue);
     return navigate(`/searchProduct/${searchValue}`);
   };

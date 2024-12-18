@@ -95,7 +95,7 @@ const PlaceOrderModal = ({
                   type="text"
                   value={user?.email}
                   disabled={true}
-                  name="name"
+                  name="email"
                   className="input input-bordered font-semibold"
                 />
               </div>
@@ -106,7 +106,7 @@ const PlaceOrderModal = ({
                 </label>
                 <input
                   type="text"
-                  name="number"
+                  name="phone"
                   className="input input-bordered font-semibold"
                 />
               </div>
@@ -119,7 +119,7 @@ const PlaceOrderModal = ({
                 </label>
                 <textarea
                   className="textarea textarea-bordered"
-                  name="review"
+                  name="address"
                   placeholder="Give your full address within 85 characters."
                   required
                 ></textarea>

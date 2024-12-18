@@ -1,14 +1,33 @@
-import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import toast from "react-hot-toast";
 import { LuView } from "react-icons/lu";
 import { CiSquareRemove } from "react-icons/ci";
-import { removeFromWish } from "../../Redux/Features/Wishlist/wishSlice";
+import useAuth from "../../Hooks/useAuth";
+import useAxiosPublic from "../../Hooks/useAxiosPublic";
+import { useQuery } from "@tanstack/react-query";
 
 export default function OrderedProducts() {
-  const wishItems = useSelector((state) => state.wish.wish);
+  const { user } = useAuth();
+  const axiosPublic = useAxiosPublic();
 
-  const dispatch = useDispatch();
+  const {
+    data: orderedItems = [],
+    isLoading,
+    refetch,
+  } = useQuery({
+    queryKey: ["orderedProducts"],
+    queryFn: async () => {
+      const res = await axiosPublic.get(`/orders/${user?.email}`);
+      if (res.status === 204) {
+        return [];
+      }
+      return res.data;
+    },
+    enabled: !!user?.email,
+  });
+  console.log("Ordered Items", orderedItems);
+
+  const mergedOrderItems = orderedItems.flatMap((item) => item.order);
+  console.log("Merge", mergedOrderItems);
 
   return (
     <div className="">
@@ -24,7 +43,7 @@ export default function OrderedProducts() {
       </div>
 
       <div className="max-w-6xl mx-auto p-4">
-        {wishItems.length === 0 ? (
+        {mergedOrderItems.length === 0 ? (
           <p className="text-green-500 text-center text-3xl font-semibold mt-10">
             Your list is <span className="text-red-600"> empty!</span>{" "}
           </p>
@@ -43,7 +62,7 @@ export default function OrderedProducts() {
                 </tr>
               </thead>
               <tbody>
-                {wishItems.map((item, indx) => (
+                {mergedOrderItems.map((item, indx) => (
                   <tr key={indx} className="border-b">
                     <td className="py-4">
                       <div className="flex items-center gap-4">
@@ -77,16 +96,6 @@ export default function OrderedProducts() {
                         <Link to={`/productDetails/${item._id}`}>
                           <LuView className="text-2xl text-green-500" />
                         </Link>
-
-                        <CiSquareRemove
-                          className="cursor-pointer text-3xl text-red-500"
-                          onClick={() => {
-                            dispatch(removeFromWish(item._id));
-                            toast.success(
-                              "Your item has been removed from ordered list!"
-                            );
-                          }}
-                        />
                       </div>
                     </td>
                   </tr>

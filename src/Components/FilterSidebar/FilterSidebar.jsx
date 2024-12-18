@@ -27,7 +27,7 @@ export default function FiltersSidebar() {
           onClick={() => setIsOpen(!isOpen)}
           className="flex items-center justify-between w-full py-2 text-left hover:text-gray-600"
         >
-          <span className="">Collections</span>
+          <span className="text-xl">Collections</span>
           {isOpen ? (
             <GoChevronUp className="w-4 h-4" />
           ) : (

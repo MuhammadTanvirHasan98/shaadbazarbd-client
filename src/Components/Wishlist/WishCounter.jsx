@@ -1,11 +1,10 @@
 import { TbJewishStar } from "react-icons/tb";
 import React from "react";
+import useAuth from "../../Hooks/useAuth";
 import { useSelector } from "react-redux";
 
 function WishCounter() {
   const wishCount = useSelector((state) => state.wish.wish).length;
-
-  console.log(wishCount);
 
   return (
     <div className={`relative`}>

@@ -2,16 +2,46 @@ import PropTypes from "prop-types";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { addProduct } from "../../Redux/Features/Cart/cartSlice";
-import { addToWish } from "../../Redux/Features/Wishlist/wishSlice";
 import toast from "react-hot-toast";
 import useAuth from "../../Hooks/useAuth";
+import useAxiosPublic from "../../Hooks/useAxiosPublic";
+import Swal from "sweetalert2";
+import { addWish } from "../../Redux/Features/Wishlist/wishSlice";
 
 const ProductCard = ({ card }) => {
   const { _id, product_name, product_img, price } = card;
 
-  const { user } = useAuth();
+  const axiosPublic = useAxiosPublic();
 
+  const { user } = useAuth();
   const dispatch = useDispatch();
+
+  const handleWishlist = async (card) => {
+    console.log(card);
+    const { _id, product_name, product_img, price } = card;
+
+    const wishProduct = {
+      product_id: _id,
+      user_email: user?.email,
+      product_name,
+      product_img,
+      price,
+    };
+
+    try {
+      const { data } = await axiosPublic.post("/addWishProduct", wishProduct);
+      console.log(data);
+      if (data.insertedId) {
+        Swal.fire({
+          title: "Your product item has been added to the wishlist.",
+          icon: "success",
+        });
+      }
+    } catch (err) {
+      console.log(err.message);
+    }
+    dispatch(addWish(wishProduct));
+  };
 
   return (
     <div className="cursor-pointer">
@@ -31,7 +61,7 @@ const ProductCard = ({ card }) => {
           {/* Cards Info */}
           <div className="text-lg flex flex-col items-center justify-center">
             <h2 className="text-2xl font-semibold merienda text-center mb-2">
-              {product_name}
+              {product_name.slice(0, 18)}...
             </h2>
             <div>
               <p className="text-lg font-semibold text-green-700 ">
@@ -46,12 +76,7 @@ const ProductCard = ({ card }) => {
 
             {user ? (
               <button
-                onClick={() => {
-                  dispatch(
-                    addToWish({ _id, product_name, product_img, price })
-                  );
-                  toast.success(`${product_name} is added to the wishlist!`);
-                }}
+                onClick={() => handleWishlist(card)}
                 className="btn btn-outline btn-sm transition duration-500 hover:bg-green-600 font-extrabold text-[#27a373] merienda rounded-none"
               >
                 Add Wish
