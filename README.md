@@ -38,8 +38,8 @@ Make sure you have the following installed on your system:
 ### Installation
 1.Clone the repository:
 ```bash
-git clone https://github.com/MuhammadTanvirHasan98/muhammads-cuisine-client.git
-cd muhammads-cuisine-client
+git clone https://github.com/MuhammadTanvirHasan98/shaadbazarbd-client.git
+cd shaadbazarbd-client
 ```
 2.Installation:
 ```bash
